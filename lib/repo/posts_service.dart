@@ -3,11 +3,11 @@ import 'package:retrofit/retrofit.dart';
 
 part 'posts_service.g.dart';
 
-@RestApi(baseUrl: "https://posthook-api.mock.beeceptor.com")
+@RestApi(baseUrl: "https://jsonplaceholder.typicode.com")
 abstract class PostsService {
   factory PostsService(Dio dio) = _PostsService;
 
-  @GET("/v1/hooks")
+  @GET("/posts")
   Future<dynamic> fetchPosts();
     @POST("/products")
   Future<dynamic> addPost(@Body() Map<String, dynamic> postData);

@@ -13,7 +13,7 @@ class _PostsService implements PostsService {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://posthook-api.mock.beeceptor.com';
+    baseUrl ??= 'https://jsonplaceholder.typicode.com';
   }
 
   final Dio _dio;
@@ -33,7 +33,7 @@ class _PostsService implements PostsService {
     )
         .compose(
           _dio.options,
-          '/v1/hooks',
+          '/posts',
           queryParameters: queryParameters,
           data: _data,
         )

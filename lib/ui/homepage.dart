@@ -50,17 +50,17 @@ class _PostDataPageState extends State<PostDataPage> {
                   return Center(child: CircularProgressIndicator());
                 case PostStatus.Succes:
                   print('homepage data reach saucces>>>>>>>>>>>');
-                  print(state.postlist[0].data!.length.toString());
-                  print(state.postlist[0].data![0].id);
+                  print(state.postlist[0].body);
+                  print(state.postlist[0].id);
                   print("""end""");
-                  int lengthValue = state.postlist[0].data!.length;
+                  int lengthValue = state.postlist.length;
                   print(lengthValue);
                   print("""the end""");
                   if (state.IsviewList) {
                     return GridView.count(
                       crossAxisCount: 2,
                       children: List.generate(lengthValue, (index) {
-                           final item = state.postlist[0].data![index];
+                           final item = state.postlist[index];
                         
                         return Center(
                           child: Column(
@@ -79,12 +79,12 @@ class _PostDataPageState extends State<PostDataPage> {
                     return ListView.builder(
                         itemCount:lengthValue,
                         itemBuilder: (context, index) {
-                          final item = state.postlist[0].data![index];
+                          final item = state.postlist[index];
                         
                           return ListTile(
                               leading: Text(index.toString()),
-                              title: Text(item.updatedAt.toString()),
-                              subtitle: Text(item.path.toString()));
+                              title: Text(item.id.toString()),
+                              subtitle: Text(item.body.toString()));
                         });
                   }
               }
