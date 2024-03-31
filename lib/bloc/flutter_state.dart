@@ -6,16 +6,21 @@ class FlutterState extends Equatable{
   String message;
   bool isScaffold;
   bool IsviewList;
+  String name ;
+  String passwd;
   PostStatus postStatus;
   List<Welcome> postlist ;
-  FlutterState({this.isScaffold=false,this.IsviewList=false,this.message='',this.postStatus=PostStatus.Loding,this.postlist=const <Welcome>[]});
+  FlutterState({this.name ='empty',this.passwd ='empty' , this.isScaffold=false,this.IsviewList=false,this.message='',this.postStatus=PostStatus.Loding,this.postlist=const <Welcome>[]});
   FlutterState copyWith({ String? message, bool? isScaffold,
-  PostStatus? postStatus,bool? IsviewList,
+  PostStatus? postStatus,bool? IsviewList,  String? name ,
+  String? passwd,
   List<Welcome>? postlist }){
-    print('>>>>>-state- postlist>>>>>${postlist.toString()}');
+ print('[][][][][][]]$name $passwd');
 
 
     return FlutterState(
+      name: name??this.name,
+passwd: passwd?? this.passwd,
       isScaffold: isScaffold??this.isScaffold,
       IsviewList: IsviewList ?? this.IsviewList,
       postStatus: postStatus ??this.postStatus,
@@ -26,5 +31,5 @@ class FlutterState extends Equatable{
   }
   @override
 
-  List<Object?> get props =>[IsviewList,isScaffold];
+  List<Object?> get props =>[IsviewList,isScaffold,name,passwd,postStatus,message,postlist];
 }

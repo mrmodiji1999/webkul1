@@ -6,8 +6,6 @@ import 'package:webkul1/bloc/flutter_event.dart';
 import 'package:webkul1/bloc/flutter_state.dart';
 import 'package:webkul1/repo/dio.dart';
 import 'package:webkul1/repo/post_status.dart';
-import 'package:webkul1/repo/posts_service.dart';
-import 'package:webkul1/repo/repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FlutterBloc extends Bloc<FlutterEvent, FlutterState> {
@@ -17,6 +15,9 @@ class FlutterBloc extends Bloc<FlutterEvent, FlutterState> {
     on<PostFetchEvent>(postFetchEvent);
         on<ViewEvent>(viewEvent);
         on<ScaffoldEvent>(scaffoldEvent);
+        
+        on<ApiDataSendEvent>(apiDataSendEvent);
+
   }
 
   FutureOr<void> postFetchEvent(
@@ -61,5 +62,17 @@ sp.setBool('isScaffold', !state.isScaffold);
     emit(state.copyWith(isScaffold: !state.isScaffold,));
   }
 
+
+  FutureOr<void> apiDataSendEvent(ApiDataSendEvent event, Emitter<FlutterState> emit) {
+   
+    final value= PostsRepo.addPost(event.email ,  event.passwd);
+   
+    print('i am showing response of api addpost ${value.toString()}');
+    emit(state.copyWith(name:event.email ,passwd: event.passwd));
+
+
+
+
+  }
 }
 

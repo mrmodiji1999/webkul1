@@ -34,8 +34,9 @@ print('????outer response = >>> $responseData');
     }
   }
 
-  static Future<bool> addPost() async {
+  static Future<bool> addPost(String name ,passwd) async {
       final dio = Dio();
+      print('add post se $name $passwd');
     final postsService = PostsService(dio);
 
     try {
@@ -44,17 +45,18 @@ print('????outer response = >>> $responseData');
       };
 
       final body = {
-        "firstName": "narendra",
-        "lastName": "jangid",
+        "firstName": name,
+        "lastName": passwd,
       };
 
       final response = await dio.post(
-       '',
+       'https://jsonplaceholder.typicode.com/posts',
         options: Options(headers: headers),
         data: body,
-      );
+      );print('i am from dio post method $response');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
+        print(response);
         return true;
       } else {
         return false;

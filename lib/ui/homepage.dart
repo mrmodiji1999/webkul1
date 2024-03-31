@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webkul1/bloc/flutter_bloc.dart';
 import 'package:webkul1/bloc/flutter_event.dart';
 import 'package:webkul1/bloc/flutter_state.dart';
 import 'package:webkul1/repo/post_status.dart';
+import 'package:webkul1/ui/FormInput.dart';
 
 class PostDataPage extends StatefulWidget {
   const PostDataPage({super.key});
@@ -14,12 +14,14 @@ class PostDataPage extends StatefulWidget {
 }
 
 class _PostDataPageState extends State<PostDataPage> {
+  TextEditingController search = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     context.read<FlutterBloc>().add(PostFetchEvent());
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +40,13 @@ class _PostDataPageState extends State<PostDataPage> {
                 IconButton(onPressed: () {
                   context.read<FlutterBloc>().add(ScaffoldEvent());
                 }, icon:state.isScaffold? Icon(Icons.lightbulb,color: Colors.yellow,):Icon(Icons.lightbulb))
-              ],
-              title: Text('post api'),
+              ],title:TextField(onChanged: (value) {
+                setState(() {
+                  
+                });
+              },decoration: InputDecoration(label: Text('search hear your data item')),controller: search,),
+              leading:IconButton(onPressed: (){Navigator.of(context).push(MaterialPageRoute(builder: (context) => DataSendClass()));
+}, icon: Icon(Icons.add)),
             ),
             body: BlocBuilder<FlutterBloc, FlutterState>(
                 builder: (context, state) {
@@ -80,11 +87,17 @@ class _PostDataPageState extends State<PostDataPage> {
                         itemCount:lengthValue,
                         itemBuilder: (context, index) {
                           final item = state.postlist[index];
-                        
-                          return ListTile(
+                          String name = state.postlist[index].title.toString();
+                        if(search.text.isEmpty){ return ListTile(
                               leading: Text(index.toString()),
                               title: Text(item.id.toString()),
-                              subtitle: Text(item.body.toString()));
+                              subtitle: Text(item.body.toString()));}else if(
+name.toLowerCase().contains(search.text.toLowerCase())
+                              ){ return ListTile(
+                              leading: Text(index.toString()),
+                              title: Text(item.id.toString()),
+                              subtitle: Text(item.body.toString()));}else{Container();}
+                         
                         });
                   }
               }
