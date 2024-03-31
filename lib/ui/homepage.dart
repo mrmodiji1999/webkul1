@@ -32,8 +32,8 @@ class _PostDataPageState extends State<PostDataPage> {
                 },
                 child: Icon(Icons.add)),
 
-            backgroundColor:state.isScaffold ? Colors.white24:Color.fromARGB(255, 68, 49, 96),
-            appBar: AppBar(
+            backgroundColor:state.isScaffold ? Colors.blue:Colors.yellow,
+            appBar: AppBar(backgroundColor:Colors.transparent,
               actions: [
                 IconButton(onPressed: () {
                   context.read<FlutterBloc>().add(ScaffoldEvent());
@@ -47,32 +47,44 @@ class _PostDataPageState extends State<PostDataPage> {
                 case PostStatus.Failuer:
                   return Text('fail');
                 case PostStatus.Loding:
-                  return CircularProgressIndicator();
+                  return Center(child: CircularProgressIndicator());
                 case PostStatus.Succes:
-                  print('posst saucces');
-                  print(state.postlist.length);
+                  print('homepage data reach saucces>>>>>>>>>>>');
+                  print(state.postlist[0].data!.length.toString());
+                  print(state.postlist[0].data![0].id);
+                  print("""end""");
+                  int lengthValue = state.postlist[0].data!.length;
+                  print(lengthValue);
+                  print("""the end""");
                   if (state.IsviewList) {
                     return GridView.count(
                       crossAxisCount: 2,
-                      children: List.generate(100, (index) {
+                      children: List.generate(lengthValue, (index) {
+                           final item = state.postlist[0].data![index];
+                        
                         return Center(
-                          child: Text(
-                            'Item $index',
-                            style: Theme.of(context).textTheme.headlineSmall,
+                          child: Column(
+                            children: [
+                              Text(
+                                index.toString(),
+                                style: Theme.of(context).textTheme.headlineSmall,
+                              ),
+                              Text(item.id.toString())
+                            ],
                           ),
                         );
                       }),
                     );
-                  } else {
+                  } else {print('narendra1');
                     return ListView.builder(
-                        itemCount: state.postlist.length,
+                        itemCount:lengthValue,
                         itemBuilder: (context, index) {
-                          final item = state.postlist[index];
-
+                          final item = state.postlist[0].data![index];
+                        
                           return ListTile(
                               leading: Text(index.toString()),
-                              title: Text(item.title),
-                              subtitle: Text(item.body));
+                              title: Text(item.updatedAt.toString()),
+                              subtitle: Text(item.path.toString()));
                         });
                   }
               }

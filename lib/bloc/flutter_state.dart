@@ -12,6 +12,9 @@ class FlutterState extends Equatable{
   FlutterState copyWith({ String? message, bool? isScaffold,
   PostStatus? postStatus,bool? IsviewList,
   List<Welcome>? postlist }){
+    print('>>>>>-state- postlist>>>>>${postlist.toString()}');
+
+
     return FlutterState(
       isScaffold: isScaffold??this.isScaffold,
       IsviewList: IsviewList ?? this.IsviewList,

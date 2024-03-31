@@ -1,14 +1,17 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:webkul1/bloc/flutter_event.dart';
 import 'package:webkul1/bloc/flutter_state.dart';
+import 'package:webkul1/repo/dio.dart';
 import 'package:webkul1/repo/post_status.dart';
+import 'package:webkul1/repo/posts_service.dart';
 import 'package:webkul1/repo/repo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FlutterBloc extends Bloc<FlutterEvent, FlutterState> {
-  postrepo postrepoo = postrepo();
+  // postrepo postrepoo = postrepo();
 
   FlutterBloc() : super(FlutterState()) {
     on<PostFetchEvent>(postFetchEvent);
@@ -25,7 +28,8 @@ print('????????????????????????????????');
  print( sp.getBool('IsviewList')??state.IsviewList);
         print('????????????????????????????????');
         print('post fetch event method ');
- await   postrepoo.PostEvent().then((value) => 
+ await PostsRepo.fetchPosts().then((value) => 
+
  emit(state.copyWith(
       postStatus:  PostStatus.Succes,
       message: 'success',
